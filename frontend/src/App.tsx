@@ -1,6 +1,7 @@
 import React from 'react'
 import { Routes, Route, Link } from 'react-router-dom'
-import { Box, Container, Heading, Flex, Button, HStack } from '@chakra-ui/react'
+import { Box, Container, Heading, Flex, Button, HStack, Text } from '@chakra-ui/react'
+import { useAuth } from './context/AuthContext'
 import Login from './pages/Login'
 import Signup from './pages/Signup'
 import Dashboard from './pages/Dashboard'
@@ -15,11 +16,15 @@ import Analytics from './pages/Analytics'
 import Streaks from './pages/Streaks'
 import Profile from './pages/Profile'
 import Admin from './pages/Admin'
+import Announcements from './pages/Announcements'
+import Essential from './pages/Essential'
 
 export default function App() {
+  const { user, logout } = useAuth()
+
   return (
     <Container maxW="container.md" py={6}>
-      <Flex justify="space-between" align="center" mb={6}>
+      <Flex justify="space-between" align="center" mb={6} wrap="wrap">
         <Heading size="md">Smart Study Tracker</Heading>
         <HStack spacing={2}>
           <Button as={Link} to="/" variant="ghost" size="sm">Dashboard</Button>
@@ -33,9 +38,24 @@ export default function App() {
           <Button as={Link} to="/analytics" variant="ghost" size="sm">Analytics</Button>
           <Button as={Link} to="/streaks" variant="ghost" size="sm">Streaks</Button>
           <Button as={Link} to="/admin" variant="outline" size="sm" colorScheme="purple">Admin</Button>
+          <Button as={Link} to="/announcements" variant="ghost" size="sm">Announcements</Button>
+          <Button as={Link} to="/essential" variant="ghost" size="sm">Essential</Button>
           <Button as={Link} to="/profile" colorScheme="teal" size="sm">Profile</Button>
+          {user ? (
+            <Button onClick={logout} colorScheme="red" size="sm">Logout</Button>
+          ) : (
+            <>
+              <Button as={Link} to="/login" colorScheme="blue" size="sm">Login</Button>
+              <Button as={Link} to="/signup" colorScheme="green" size="sm">Signup</Button>
+            </>
+          )}
         </HStack>
       </Flex>
+      {user && (
+        <Box mb={4} p={3} bg="gray.50" rounded="md">
+          <Text fontSize="sm">Signed in as {user.name || user.email}</Text>
+        </Box>
+      )}
       <Routes>
         <Route path="/" element={<Dashboard />} />
         <Route path="/login" element={<Login />} />
@@ -50,6 +70,8 @@ export default function App() {
         <Route path="/analytics" element={<Analytics />} />
         <Route path="/streaks" element={<Streaks />} />
         <Route path="/profile" element={<Profile />} />
+        <Route path="/announcements" element={<Announcements />} />
+        <Route path="/essential" element={<Essential />} />
         <Route path="/admin" element={<Admin />} />
       </Routes>
     </Container>

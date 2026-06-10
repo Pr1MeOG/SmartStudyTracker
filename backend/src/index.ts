@@ -14,6 +14,7 @@ import analyticsRoutes from './routes/analytics'
 import userRoutes from './routes/user'
 import streaksRoutes from './routes/streaks'
 import adminRoutes from './routes/admin'
+import announcementsRoutes from './routes/announcements'
 
 dotenv.config()
 
@@ -34,6 +35,7 @@ app.use('/api/analytics', analyticsRoutes)
 app.use('/api/user', userRoutes)
 app.use('/api/streaks', streaksRoutes)
 app.use('/api/admin', adminRoutes)
+app.use('/api/announcements', announcementsRoutes)
 
 app.get('/api/health', (_req, res) => res.json({ ok: true }))
 

@@ -1,12 +1,14 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Box, Input, Button, VStack, Heading } from '@chakra-ui/react'
+import { useAuth } from '../context/AuthContext'
 
 export default function Signup() {
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const navigate = useNavigate()
+  const { login } = useAuth()
 
   async function handleSignup() {
     try {
@@ -17,7 +19,7 @@ export default function Signup() {
       })
       const data = await res.json()
       if (res.ok) {
-        localStorage.setItem('token', data.token)
+        login(data.user, data.token)
         navigate('/')
       } else {
         alert(data.error || 'Signup failed')
