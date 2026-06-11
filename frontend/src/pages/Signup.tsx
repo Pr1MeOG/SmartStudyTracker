@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
-import { Box, Input, Button, VStack, Heading } from '@chakra-ui/react'
+import { useNavigate, Link as RouterLink } from 'react-router-dom'
+import { Box, Input, Button, VStack, Heading, Text, Card, CardBody, CardHeader, Divider, Flex, FormControl, FormLabel } from '@chakra-ui/react'
 import { useAuth } from '../context/AuthContext'
 
 export default function Signup() {
@@ -30,14 +30,39 @@ export default function Signup() {
   }
 
   return (
-    <Box>
-      <Heading size="sm" mb={4}>Sign up</Heading>
-      <VStack spacing={3} align="stretch">
-        <Input placeholder="Name" value={name} onChange={e => setName(e.target.value)} />
-        <Input placeholder="Email" value={email} onChange={e => setEmail(e.target.value)} />
-        <Input placeholder="Password" type="password" value={password} onChange={e => setPassword(e.target.value)} />
-        <Button colorScheme="teal" onClick={handleSignup}>Create account</Button>
-      </VStack>
-    </Box>
+    <Flex justify="center" align="center" minH="70vh">
+      <Card maxW="480px" w="100%" borderWidth="1px" borderColor="slate.200" boxShadow="card">
+        <CardHeader>
+          <Heading size="lg">Create your account</Heading>
+          <Text mt={2} color="slate.600">Join the school experience with a polished learning workspace.</Text>
+        </CardHeader>
+        <CardBody>
+          <VStack spacing={4} align="stretch">
+            <FormControl>
+              <FormLabel>Name</FormLabel>
+              <Input placeholder="Alicia Brown" value={name} onChange={(e) => setName(e.target.value)} />
+            </FormControl>
+            <FormControl>
+              <FormLabel>Email</FormLabel>
+              <Input placeholder="student@northstar.edu" value={email} onChange={(e) => setEmail(e.target.value)} />
+            </FormControl>
+            <FormControl>
+              <FormLabel>Password</FormLabel>
+              <Input placeholder="••••••••" type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
+            </FormControl>
+            <Button colorScheme="brand" onClick={handleSignup}>Create account</Button>
+            <Divider />
+            <Box>
+              <Text fontSize="sm" color="slate.600">
+                Already have an account?{' '}
+                <Button as={RouterLink} to="/login" variant="link" colorScheme="brand">
+                  Sign in
+                </Button>
+              </Text>
+            </Box>
+          </VStack>
+        </CardBody>
+      </Card>
+    </Flex>
   )
 }
